@@ -24,4 +24,14 @@ class PagesPage extends Model
     {
         return $this->hasOne('App\User', 'id', 'writer_id');
     }
+
+    public function exists()
+    {
+        return !!$this->slug;
+    }
+
+    public function isTitle($key)
+    {
+        return ($this->exists() && $this->slug != $key);
+    }
 }

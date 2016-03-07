@@ -2,6 +2,7 @@
 
 namespace NineCells\Pages\Repositories;
 
+use NineCells\Pages\Models\PagesHistory;
 use NineCells\Pages\Models\PagesPage;
 
 class Page
@@ -22,6 +23,26 @@ class Page
             }
         }
         return $page;
+    }
+
+    public static function getRevPage($page_id, $rev)
+    {
+        $page = PagesHistory::where('pages_page_id', $page_id)
+            ->where('rev', $rev)
+            ->first();
+
+        return $page;
+    }
+
+    public static function getPageHistories($page_id)
+    {
+        $histories = PagesHistory::where('pages_page_id', $page_id)
+            ->with('writer')
+            ->orderBy('created_at', 'desc')
+            ->take(50)
+            ->get();
+
+        return $histories;
     }
 
     public static function slug($title, $separator = '-')

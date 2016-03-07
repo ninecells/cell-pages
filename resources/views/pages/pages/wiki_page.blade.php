@@ -2,9 +2,9 @@
 
 @section('head')
 <style>
-h1, h2, h3, h4 {
-    margin-top: 30px;
-}
+    h1, h2, h3, h4 {
+        margin-top: 30px;
+    }
 </style>
 @endsection
 
@@ -15,15 +15,15 @@ h1, h2, h3, h4 {
 
 <h1>{{ $page->title }}</h1>
 
-@if( $page->slug )
-    <p>{!! $page->md_content !!}</p>
+@if($page->exists())
+<p>{!! $page->md_content !!}</p>
 @else
-    <p>
-        아직 존재하지 않는 문서입니다.
-        @if(Auth::check())
-        "<a href="/pages/{{ $page->title }}/edit">{{ $page->title }}</a>" 문서를 만들어주세요.
-        @endif
-    </p>
+<p>
+    아직 존재하지 않는 문서입니다.
+    @if(Auth::check())
+    "<a href="/pages/{{ $page->title }}/edit">{{ $page->title }}</a>" 문서를 만들어주세요.
+    @endif
+</p>
 @endif
 
 @endsection
