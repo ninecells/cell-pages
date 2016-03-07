@@ -14,7 +14,7 @@ class PagesHistory extends Model
     public function getMdContentAttribute()
     {
         $content = $this->attributes['content'];
-        $parsedown = new MyParsedown();
+        $parsedown = new PageParsedown();
         return $parsedown->text($content);
     }
 
