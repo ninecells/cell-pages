@@ -17,7 +17,7 @@ class PagesPage extends Model
     {
         $content = $this->attributes['content'];
         $parsedown = new MyParsedown();
-        return clean($parsedown->text($content));
+        return $parsedown->text($content);
     }
 
     public function writer()
