@@ -19,7 +19,7 @@ class MyParsedown extends \Parsedown
                 'extent' => strlen($matches[0]),
                 'element' => array(
                     'name' => 'div',
-                    'text' => view('ncells::wiki.parts.wikitag_'.$matches[1]),
+                    'text' => view('ncells::pages.parts.wikitag_'.$matches[1]),
                 ),
             );
         }
@@ -32,7 +32,7 @@ class MyParsedown extends \Parsedown
                     'name' => 'a',
                     'text' => $matches[1],
                     'attributes' => array(
-                        'href' => '/wiki/'.$matches[1],
+                        'href' => '/pages/'.$matches[1],
                     ),
                 ),
             );
