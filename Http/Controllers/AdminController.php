@@ -23,7 +23,6 @@ class AdminController extends Controller
         }
 
         $page = Page::getRevPage($page->id, $rev);
-
         if (!$page) {
             // 존재하지 않는 revision 인 경우 문서로 이동
             return redirect("/pages/{$page->slug}");
@@ -34,7 +33,7 @@ class AdminController extends Controller
         return view('ncells::pages.pages.wiki_rev_page', ['page' => $page, 'rev' => $rev]);
     }
 
-    public function GET_page_form($key)
+    public function GET_edit_page_form($key)
     {
         $this->authorize('pages-write');
 
@@ -48,36 +47,6 @@ class AdminController extends Controller
         Page::setMetaTags($page);
 
         return view('ncells::pages.pages.wiki_page_form', ['page' => $page]);
-    }
-
-    //TODO: 정리필요
-    public function PUT_page_form(Request $request)
-    {
-        $this->authorize('pages-write');
-        $title = $request->input('title');
-        $content = $request->input('content');
-        $slug = Page::slug($title);
-
-        $page = Page::getPage($title);
-        $page->rev = $page->rev + 1;
-        $page->title = $title;
-        $page->slug = $slug;
-        $page->content = $content;
-        $page->writer_id = Auth::user()->id;
-        $page->save();
-
-        $history = new PagesHistory();
-        $history->pages_page_id = $page->id;
-        $history->rev = $page->rev;
-        $history->title = $page->title;
-        $history->slug = $page->slug;
-        $history->content = $page->content;
-        $history->writer_id = $page->writer_id;
-        $history->created_at = $page->updated_at;
-        $history->updated_at = $page->updated_at;
-        $history->save();
-
-        return redirect("/pages/$slug");
     }
 
     public function GET_page_history($key)
@@ -132,5 +101,35 @@ class AdminController extends Controller
         $rendered_diff = str_replace('\n', '&nbsp;<br/>', $rendered_diff);
 
         return view('ncells::pages.pages.wiki_compare', ['page' => $page, 'rendered_diff' => $rendered_diff]);
+    }
+
+    //TODO: 정리필요
+    public function PUT_edit_page_form(Request $request)
+    {
+        $this->authorize('pages-write');
+        $title = $request->input('title');
+        $content = $request->input('content');
+        $slug = Page::slug($title);
+
+        $page = Page::getPage($title);
+        $page->rev = $page->rev + 1;
+        $page->title = $title;
+        $page->slug = $slug;
+        $page->content = $content;
+        $page->writer_id = Auth::user()->id;
+        $page->save();
+
+        $history = new PagesHistory();
+        $history->pages_page_id = $page->id;
+        $history->rev = $page->rev;
+        $history->title = $page->title;
+        $history->slug = $page->slug;
+        $history->content = $page->content;
+        $history->writer_id = $page->writer_id;
+        $history->created_at = $page->updated_at;
+        $history->updated_at = $page->updated_at;
+        $history->save();
+
+        return redirect("/pages/$slug");
     }
 }
