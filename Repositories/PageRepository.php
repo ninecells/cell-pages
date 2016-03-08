@@ -3,7 +3,7 @@
 namespace NineCells\Pages\Repositories;
 
 use FineDiff;
-use NineCells\Pages\Models\Archive;
+use NineCells\Pages\Models\History;
 use NineCells\Pages\Models\Page;
 
 class PageRepository
@@ -28,7 +28,7 @@ class PageRepository
 
     public static function getRevPage($page_id, $rev)
     {
-        $page = Archive::where('pages_page_id', $page_id)
+        $page = History::where('pages_page_id', $page_id)
             ->where('rev', $rev)
             ->first();
 
@@ -37,7 +37,7 @@ class PageRepository
 
     public static function getPageHistories($page_id)
     {
-        $histories = Archive::where('pages_page_id', $page_id)
+        $histories = History::where('pages_page_id', $page_id)
             ->with('writer')
             ->orderBy('created_at', 'desc')
             ->take(50)
@@ -87,7 +87,7 @@ class PageRepository
         $page->writer_id = $writer_id;
         $page->save();
 
-        $history = new Archive();
+        $history = new History();
         $history->pages_page_id = $page->id;
         $history->rev = $page->rev;
         $history->title = $page->title;

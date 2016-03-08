@@ -5,7 +5,7 @@ namespace NineCells\Pages\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Archive extends Model
+class History extends Model
 {
     protected $table = 'pages_histories';
 
