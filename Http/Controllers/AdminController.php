@@ -30,7 +30,7 @@ class AdminController extends Controller
 
         PageRepository::setMetaTags($page);
 
-        return view('ncells::page.pages.admin.rev', ['page' => $page, 'rev' => $rev]);
+        return view('ncells::pages.pages.admin.rev', ['page' => $page, 'rev' => $rev]);
     }
 
     public function GET_edit_page_form($key)
@@ -46,7 +46,7 @@ class AdminController extends Controller
 
         PageRepository::setMetaTags($page);
 
-        return view('ncells::page.pages.admin.form', ['page' => $page]);
+        return view('ncells::pages.pages.admin.form', ['page' => $page]);
     }
 
     public function GET_page_history($key)
@@ -66,7 +66,7 @@ class AdminController extends Controller
 
         PageRepository::setMetaTags($page);
 
-        return view('ncells::page.pages.admin.history', ['page' => $page, 'histories' => $histories]);
+        return view('ncells::pages.pages.admin.history', ['page' => $page, 'histories' => $histories]);
     }
 
     public function GET_page_compare($key, $left, $right)
@@ -94,7 +94,7 @@ class AdminController extends Controller
 
         $diff = PageRepository::getDiffHtml($l_page->content, $r_page->content);
 
-        return view('ncells::page.pages.admin.compare', ['page' => $page, 'rendered_diff' => $diff]);
+        return view('ncells::pages.pages.admin.compare', ['page' => $page, 'rendered_diff' => $diff]);
     }
 
     public function PUT_edit_page_form(Request $request)

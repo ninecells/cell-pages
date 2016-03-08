@@ -19,6 +19,6 @@ class PageController extends Controller
 
         PageRepository::setMetaTags($page);
 
-        return view('ncells::page.pages.view', ['page' => $page]);
+        return view('ncells::pages.pages.view', ['page' => $page]);
     }
 }
