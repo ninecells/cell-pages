@@ -1,5 +1,5 @@
 <?php
-use NineCells\Page\Models\Archive;
+use NineCells\Pages\Models\Archive;
 $hs = Archive::orderBy('id', 'desc')->paginate(10);
 ?>
 <table class="table table-bordered">

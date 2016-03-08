@@ -1,6 +1,6 @@
 <?php
 
-namespace NineCells\Page\Models;
+namespace NineCells\Pages\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

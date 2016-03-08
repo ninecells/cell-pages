@@ -1,10 +1,10 @@
 <?php
 
-namespace NineCells\Page\Repositories;
+namespace NineCells\Pages\Repositories;
 
 use FineDiff;
-use NineCells\Page\Models\Archive;
-use NineCells\Page\Models\Page;
+use NineCells\Pages\Models\Archive;
+use NineCells\Pages\Models\Page;
 
 class PageRepository
 {

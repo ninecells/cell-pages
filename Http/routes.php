@@ -2,7 +2,7 @@
 
 Route::group(['middleware' => ['web']], function () {
 
-    Route::group(['namespace' => 'NineCells\Page\Http\Controllers'], function() {
+    Route::group(['namespace' => 'NineCells\Pages\Http\Controllers'], function() {
 
         Route::group(['prefix' => 'pages'], function() {
 

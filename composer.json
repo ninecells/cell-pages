@@ -7,7 +7,7 @@
   },
   "autoload": {
     "psr-4": {
-      "NineCells\\Page\\": ""
+      "NineCells\\Pages\\": ""
     }
   },
   "minimum-stability": "dev"

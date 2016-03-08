@@ -1,6 +1,6 @@
 <?php
 
-namespace NineCells\Page;
+namespace NineCells\Pages;
 
 use App;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;

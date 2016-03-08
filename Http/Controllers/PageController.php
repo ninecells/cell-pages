@@ -1,10 +1,10 @@
 <?php
 
-namespace NineCells\Page\Http\Controllers;
+namespace NineCells\Pages\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
-use NineCells\Page\Repositories\PageRepository;
+use NineCells\Pages\Repositories\PageRepository;
 
 class PageController extends Controller
 {

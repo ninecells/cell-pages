@@ -1,5 +1,5 @@
 <?php
-use NineCells\Page\Models\Page;
+use NineCells\Pages\Models\Page;
 $pages = Page::orderBy('id', 'desc')->paginate(10);
 ?>
 <table class="table table-bordered">
