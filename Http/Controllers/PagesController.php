@@ -19,6 +19,6 @@ class PagesController extends Controller
 
         Page::setMetaTags($page);
 
-        return view('ncells::pages.pages.wiki_page', ['page' => $page]);
+        return view('ncells::page.pages.view', ['page' => $page]);
     }
 }

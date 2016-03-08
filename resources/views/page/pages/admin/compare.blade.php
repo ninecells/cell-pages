@@ -1,8 +1,6 @@
 @extends('ncells::jumbotron.app')
 
 @section('content')
-@include('ncells::pages.parts.top_menu')
-@include('ncells::pages.parts.top_tab', ['type' => 'history'])
 <h1>비교: {{ $page->title }}</h1>
 <div class="panecontainer">
     <div id="htmldiff" class="pane" style="white-space:pre-wrap"><?php echo $rendered_diff; ?></div>

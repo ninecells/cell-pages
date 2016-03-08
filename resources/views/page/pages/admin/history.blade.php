@@ -1,10 +1,6 @@
 @extends('ncells::jumbotron.app')
 
 @section('content')
-
-@include('ncells::pages.parts.top_menu')
-@include('ncells::pages.parts.top_tab', ['type' => 'history'])
-
 <h1>역사: {{ $page->title }}</h1>
 <p>
     <a id="btn-compare" href="#" class="btn btn-success" data-page-slug="{{ $page->slug }}">비교하기</a>
@@ -23,8 +19,8 @@
     <tbody>
     @foreach ( $histories as $history )
     <tr>
-        <td><input name="left" type="radio" value="{{ $history->rev }}" /></td>
-        <td><input name="right" type="radio" value="{{ $history->rev }}" /></td>
+        <td><input name="left" type="radio" value="{{ $history->rev }}"/></td>
+        <td><input name="right" type="radio" value="{{ $history->rev }}"/></td>
         <td>{{ $history->rev }}</td>
         <td><a href="/pages/{{ $history->slug }}/{{ $history->rev }}">{{ $history->title }}</a></td>
         <td>{{ $history->created_at->diffForHumans() }}</td>
@@ -35,7 +31,6 @@
 </table>
 @endsection
 
-
 @section('script')
 <script>
     $(function () {
@@ -43,11 +38,11 @@
             var left = $('input[name=left]:checked').val(),
                 right = $('input[name=right]:checked').val(),
                 url = '/pages/' + $(this).data('page-slug') + '/compare/' + left + '/' + right;
-            if(!left) {
+            if (!left) {
                 alert('L을 선택하세요');
                 return false;
             }
-            if(!right) {
+            if (!right) {
                 alert('R을 선택하세요');
                 return false;
             }

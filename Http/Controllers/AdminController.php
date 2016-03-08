@@ -4,6 +4,7 @@ namespace NineCells\Pages\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
+use NineCells\Pages\Models\PagesHistory;
 use NineCells\Pages\Repositories\Page;
 
 class AdminController extends Controller
@@ -30,7 +31,7 @@ class AdminController extends Controller
 
         Page::setMetaTags($page);
 
-        return view('ncells::pages.pages.wiki_rev_page', ['page' => $page, 'rev' => $rev]);
+        return view('ncells::page.pages.admin.rev', ['page' => $page, 'rev' => $rev]);
     }
 
     public function GET_edit_page_form($key)
@@ -46,7 +47,7 @@ class AdminController extends Controller
 
         Page::setMetaTags($page);
 
-        return view('ncells::pages.pages.wiki_page_form', ['page' => $page]);
+        return view('ncells::page.pages.admin.form', ['page' => $page]);
     }
 
     public function GET_page_history($key)
@@ -66,7 +67,7 @@ class AdminController extends Controller
 
         Page::setMetaTags($page);
 
-        return view('ncells::pages.pages.wiki_page_history', ['page' => $page, 'histories' => $histories]);
+        return view('ncells::page.pages.admin.history', ['page' => $page, 'histories' => $histories]);
     }
 
     //TODO: 정리필요
@@ -108,7 +109,7 @@ class AdminController extends Controller
         $rendered_diff = str_replace('\r', '\n', $rendered_diff);
         $rendered_diff = str_replace('\n', '&nbsp;<br/>', $rendered_diff);
 
-        return view('ncells::pages.pages.wiki_compare', ['page' => $page, 'rendered_diff' => $rendered_diff]);
+        return view('ncells::page.pages.admin.compare', ['page' => $page, 'rendered_diff' => $rendered_diff]);
     }
 
     //TODO: 정리필요

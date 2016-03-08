@@ -1,12 +1,6 @@
 @extends('ncells::jumbotron.app')
 
 @section('content')
-
-@include('ncells::pages.parts.top_menu')
-@include('ncells::pages.parts.top_tab', ['type' => 'edit'])
-
-<br/>
-
 <form method="post" action="/pages/update">
     {{ csrf_field() }}
     {{ method_field('PUT') }}
@@ -21,5 +15,4 @@
     </div>
     <button type="submit" class="btn btn-default">저장</button>
 </form>
-
 @endsection
