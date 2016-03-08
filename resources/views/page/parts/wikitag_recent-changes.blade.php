@@ -1,6 +1,6 @@
 <?php
-use NineCells\Pages\Models\PagesHistory;
-$hs = PagesHistory::orderBy('id', 'desc')->paginate(10);
+use NineCells\Page\Models\Archive;
+$hs = Archive::orderBy('id', 'desc')->paginate(10);
 ?>
 <table class="table table-bordered">
     <thead>

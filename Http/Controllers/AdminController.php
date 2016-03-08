@@ -4,7 +4,7 @@ namespace NineCells\Page\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
-use NineCells\Pages\Repositories\PageRepository;
+use NineCells\Page\Repositories\PageRepository;
 
 class AdminController extends Controller
 {

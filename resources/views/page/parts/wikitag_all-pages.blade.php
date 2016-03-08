@@ -1,6 +1,6 @@
 <?php
-use NineCells\Pages\Models\PagesPage;
-$pages = PagesPage::orderBy('id', 'desc')->paginate(10);
+use NineCells\Page\Models\Page;
+$pages = Page::orderBy('id', 'desc')->paginate(10);
 ?>
 <table class="table table-bordered">
     <thead>

@@ -3,8 +3,8 @@
 namespace NineCells\Page\Repositories;
 
 use FineDiff;
-use NineCells\Pages\Models\Archive;
-use NineCells\Pages\Models\Page;
+use NineCells\Page\Models\Archive;
+use NineCells\Page\Models\Page;
 
 class PageRepository
 {
