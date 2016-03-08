@@ -5,6 +5,7 @@ namespace NineCells\Pages;
 use App;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Support\ServiceProvider;
+use NineCells\Admin\AdminServiceProvider;
 use NineCells\Admin\PackageList;
 use NineCells\Auth\AuthServiceProvider;
 
@@ -41,5 +42,6 @@ class PageServiceProvider extends ServiceProvider
     public function register()
     {
         App::register(AuthServiceProvider::class);
+        App::register(AdminServiceProvider::class);
     }
 }
