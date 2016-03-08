@@ -14,7 +14,7 @@ class PageServiceProvider extends ServiceProvider
     private function registerPolicies(GateContract $gate)
     {
         $gate->before(function ($user, $ability) {
-            if ($ability === "pages-write") {
+            if ($ability === "page-write") {
                 return $user;
             }
         });

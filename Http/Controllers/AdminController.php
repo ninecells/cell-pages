@@ -8,24 +8,29 @@ use NineCells\Pages\Repositories\PageRepository;
 
 class AdminController extends Controller
 {
+    public function GET_admin_index()
+    {
+        return view('ncells::pages.pages.admin.index');
+    }
+
     public function GET_rev_page($key, $rev)
     {
         $page = PageRepository::getPage($key);
 
         if (!$page->exists()) {
             // 존재하지 않는 문서면 revision 을 보여줄 수 없으므로 생성 권유 페이지로 이동 시킨다.
-            return redirect("/pages/$key");
+            return redirect("/admin/pages/$key");
         }
 
         if ($page->isTitle($key)) {
             // 이미 존재하는 문서인데 slug가 아니라 title로 들어왔다면 slug로 바꿔서 redirect 한다.
-            return redirect("/pages/{$page->slug}/$rev");
+            return redirect("/admin/pages/{$page->slug}/$rev");
         }
 
         $page = PageRepository::getRevPage($page->id, $rev);
         if (!$page) {
             // 존재하지 않는 revision 인 경우 문서로 이동
-            return redirect("/pages/{$page->slug}");
+            return redirect("/admin/pages/{$page->slug}");
         }
 
         PageRepository::setMetaTags($page);
@@ -35,13 +40,13 @@ class AdminController extends Controller
 
     public function GET_edit_page_form($key)
     {
-        $this->authorize('pages-write');
+        $this->authorize('page-write');
 
         $page = PageRepository::getPage($key);
 
         if ($page->isTitle($key)) {
             // 이미 존재하는 문서인데 slug가 아니라 title로 들어왔다면 slug로 바꿔서 redirect 한다.
-            return redirect("/pages/{$page->slug}/edit");
+            return redirect("/admin/pages/{$page->slug}/edit");
         }
 
         PageRepository::setMetaTags($page);
@@ -54,12 +59,12 @@ class AdminController extends Controller
         $page = PageRepository::getPage($key);
 
         if (!$page->exists()) {
-            return redirect("/pages/$key");
+            return redirect("/admin/pages/$key");
         }
 
         if ($page->isTitle($key)) {
             // 이미 존재하는 문서인데 slug가 아니라 title로 들어왔다면 slug로 바꿔서 redirect 한다.
-            return redirect("/pages/{$page->slug}/history");
+            return redirect("/admin/pages/{$page->slug}/history");
         }
 
         $histories = PageRepository::getPageHistories($page->id);
@@ -75,19 +80,19 @@ class AdminController extends Controller
 
         if (!$page->exists()) {
             // 존재하지 않는 문서이므로 생성 권장
-            return redirect("/pages/$key");
+            return redirect("/admin/pages/$key");
         }
 
         if ($page->isTitle($key)) {
             // 이미 존재하는 문서인데 slug가 아니라 title로 들어왔다면 slug로 바꿔서 redirect 한다.
-            return redirect("/pages/{$page->slug}/compare/$left/$right");
+            return redirect("/admin/pages/{$page->slug}/compare/$left/$right");
         }
 
         $l_page = PageRepository::getRevPage($page->id, $left);
         $r_page = PageRepository::getRevPage($page->id, $right);
         if (!$l_page || !$r_page) {
-            // l 과 r 중 하나가 revision 이 없으므로 문서로 이동
-            return redirect("/pages/{$page->slug}");
+            // L 과 R 중 하나가 revision 이 없으므로 문서로 이동
+            return redirect("/admin/pages/{$page->slug}");
         }
 
         PageRepository::setMetaTags($page);
@@ -99,13 +104,13 @@ class AdminController extends Controller
 
     public function PUT_edit_page_form(Request $request)
     {
-        $this->authorize('pages-write');
+        $this->authorize('page-write');
 
         $title = $request->input('title');
         $content = $request->input('content');
 
         $page = PageRepository::archive($title, $content, Auth::user()->id);
 
-        return redirect("/pages/{$page->slug}");
+        return redirect("/admin/pages");
     }
 }

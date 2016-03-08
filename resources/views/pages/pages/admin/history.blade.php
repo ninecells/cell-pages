@@ -1,6 +1,7 @@
-@extends('ncells::jumbotron.app')
+@extends('ncells::admin.app')
 
 @section('content')
+@include('ncells::pages.parts.admin.top_tab', ['type' => 'history'])
 <h1>역사: {{ $page->title }}</h1>
 <p>
     <a id="btn-compare" href="#" class="btn btn-success" data-page-slug="{{ $page->slug }}">비교하기</a>
@@ -37,7 +38,7 @@
         $('#btn-compare').click(function (e) {
             var left = $('input[name=left]:checked').val(),
                 right = $('input[name=right]:checked').val(),
-                url = '/pages/' + $(this).data('page-slug') + '/compare/' + left + '/' + right;
+                url = '/admin/pages/' + $(this).data('page-slug') + '/compare/' + left + '/' + right;
             if (!left) {
                 alert('L을 선택하세요');
                 return false;

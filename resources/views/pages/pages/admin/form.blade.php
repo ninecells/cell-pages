@@ -1,7 +1,8 @@
-@extends('ncells::jumbotron.app')
+@extends('ncells::admin.app')
 
 @section('content')
-<form method="post" action="/pages/update">
+@include('ncells::pages.parts.admin.top_tab', ['type' => 'edit'])
+<form method="post" action="/admin/pages/update">
     {{ csrf_field() }}
     {{ method_field('PUT') }}
     <div class="form-group">
