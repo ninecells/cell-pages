@@ -1,12 +1,14 @@
 <?php
 
-namespace NineCells\Pages\Models;
+namespace NineCells\Page\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PagesHistory extends Model
+class Archive extends Model
 {
+    protected $table = 'pages_histories';
+
     protected $fillable = [
         'pages_page_id', 'title', 'slug', 'content', 'writer_id', 'created_at', 'updated_at'
     ];

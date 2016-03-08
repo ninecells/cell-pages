@@ -1,17 +1,16 @@
 <?php
 
-namespace NineCells\Pages\Http\Controllers;
+namespace NineCells\Page\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
-use NineCells\Pages\Models\PagesHistory;
-use NineCells\Pages\Repositories\Page;
+use NineCells\Pages\Repositories\PageRepository;
 
 class AdminController extends Controller
 {
     public function GET_rev_page($key, $rev)
     {
-        $page = Page::getPage($key);
+        $page = PageRepository::getPage($key);
 
         if (!$page->exists()) {
             // 존재하지 않는 문서면 revision 을 보여줄 수 없으므로 생성 권유 페이지로 이동 시킨다.
@@ -23,13 +22,13 @@ class AdminController extends Controller
             return redirect("/pages/{$page->slug}/$rev");
         }
 
-        $page = Page::getRevPage($page->id, $rev);
+        $page = PageRepository::getRevPage($page->id, $rev);
         if (!$page) {
             // 존재하지 않는 revision 인 경우 문서로 이동
             return redirect("/pages/{$page->slug}");
         }
 
-        Page::setMetaTags($page);
+        PageRepository::setMetaTags($page);
 
         return view('ncells::page.pages.admin.rev', ['page' => $page, 'rev' => $rev]);
     }
@@ -38,21 +37,21 @@ class AdminController extends Controller
     {
         $this->authorize('pages-write');
 
-        $page = Page::getPage($key);
+        $page = PageRepository::getPage($key);
 
         if ($page->isTitle($key)) {
             // 이미 존재하는 문서인데 slug가 아니라 title로 들어왔다면 slug로 바꿔서 redirect 한다.
             return redirect("/pages/{$page->slug}/edit");
         }
 
-        Page::setMetaTags($page);
+        PageRepository::setMetaTags($page);
 
         return view('ncells::page.pages.admin.form', ['page' => $page]);
     }
 
     public function GET_page_history($key)
     {
-        $page = Page::getPage($key);
+        $page = PageRepository::getPage($key);
 
         if (!$page->exists()) {
             return redirect("/pages/$key");
@@ -63,17 +62,16 @@ class AdminController extends Controller
             return redirect("/pages/{$page->slug}/history");
         }
 
-        $histories = Page::getPageHistories($page->id);
+        $histories = PageRepository::getPageHistories($page->id);
 
-        Page::setMetaTags($page);
+        PageRepository::setMetaTags($page);
 
         return view('ncells::page.pages.admin.history', ['page' => $page, 'histories' => $histories]);
     }
 
-    //TODO: 정리필요
     public function GET_page_compare($key, $left, $right)
     {
-        $page = Page::getPage($key);
+        $page = PageRepository::getPage($key);
 
         if (!$page->exists()) {
             // 존재하지 않는 문서이므로 생성 권장
@@ -85,60 +83,29 @@ class AdminController extends Controller
             return redirect("/pages/{$page->slug}/compare/$left/$right");
         }
 
-        $l_page = Page::getRevPage($page->id, $left);
-        $r_page = Page::getRevPage($page->id, $right);
+        $l_page = PageRepository::getRevPage($page->id, $left);
+        $r_page = PageRepository::getRevPage($page->id, $right);
         if (!$l_page || !$r_page) {
             // l 과 r 중 하나가 revision 이 없으므로 문서로 이동
             return redirect("/pages/{$page->slug}");
         }
 
-        Page::setMetaTags($page);
+        PageRepository::setMetaTags($page);
 
-        include "finediff.php";
-        $l_text = mb_convert_encoding($l_page->content, 'HTML-ENTITIES', 'UTF-8');
-        $r_text = mb_convert_encoding($r_page->content, 'HTML-ENTITIES', 'UTF-8');
-        $opcodes = \FineDiff::getDiffOpcodes($l_text, $r_text, [
-            \FineDiff::paragraphDelimiters,
-            \FineDiff::sentenceDelimiters,
-            \FineDiff::wordDelimiters,
-            ';',
-        ]);
-        $rendered_diff = \FineDiff::renderDiffToHTMLFromOpcodes($l_text, $opcodes);
-        $rendered_diff = mb_convert_encoding($rendered_diff, 'UTF-8', 'HTML-ENTITIES');
-        $rendered_diff = str_replace('\r\n', '\n', $rendered_diff);
-        $rendered_diff = str_replace('\r', '\n', $rendered_diff);
-        $rendered_diff = str_replace('\n', '&nbsp;<br/>', $rendered_diff);
+        $diff = PageRepository::getDiffHtml($l_page->content, $r_page->content);
 
-        return view('ncells::page.pages.admin.compare', ['page' => $page, 'rendered_diff' => $rendered_diff]);
+        return view('ncells::page.pages.admin.compare', ['page' => $page, 'rendered_diff' => $diff]);
     }
 
-    //TODO: 정리필요
     public function PUT_edit_page_form(Request $request)
     {
         $this->authorize('pages-write');
+
         $title = $request->input('title');
         $content = $request->input('content');
-        $slug = Page::slug($title);
 
-        $page = Page::getPage($title);
-        $page->rev = $page->rev + 1;
-        $page->title = $title;
-        $page->slug = $slug;
-        $page->content = $content;
-        $page->writer_id = Auth::user()->id;
-        $page->save();
+        $page = PageRepository::archive($title, $content, Auth::user()->id);
 
-        $history = new PagesHistory();
-        $history->pages_page_id = $page->id;
-        $history->rev = $page->rev;
-        $history->title = $page->title;
-        $history->slug = $page->slug;
-        $history->content = $page->content;
-        $history->writer_id = $page->writer_id;
-        $history->created_at = $page->updated_at;
-        $history->updated_at = $page->updated_at;
-        $history->save();
-
-        return redirect("/pages/$slug");
+        return redirect("/pages/{$page->slug}");
     }
 }

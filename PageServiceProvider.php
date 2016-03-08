@@ -1,6 +1,6 @@
 <?php
 
-namespace NineCells\Pages;
+namespace NineCells\Page;
 
 use App;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use NineCells\Admin\PackageList;
 use NineCells\Auth\AuthServiceProvider;
 
-class PagesServiceProvider extends ServiceProvider
+class PageServiceProvider extends ServiceProvider
 {
     private function registerPolicies(GateContract $gate)
     {

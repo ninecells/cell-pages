@@ -1,21 +1,22 @@
 <?php
 
-namespace NineCells\Pages\Repositories;
+namespace NineCells\Page\Repositories;
 
-use NineCells\Pages\Models\PagesHistory;
-use NineCells\Pages\Models\PagesPage;
+use FineDiff;
+use NineCells\Pages\Models\Archive;
+use NineCells\Pages\Models\Page;
 
-class Page
+class PageRepository
 {
     public static function getPage($key)
     {
         $key = trim($key);
         $key = preg_replace('/\s+/', ' ', $key);
-        $page = PagesPage::where('slug', self::slug($key))->first();
+        $page = Page::where('slug', self::slug($key))->first();
         if (!$page) {
-            $page = PagesPage::where('title', $key)->first();
+            $page = Page::where('title', $key)->first();
             if (!$page) {
-                $page = new PagesPage();
+                $page = new Page();
                 $page->rev = 0;
                 $page->title = $key;
                 $page->slug = null; // view 에서 slug가 없으면 title을 사용하므로 null 처리
@@ -27,7 +28,7 @@ class Page
 
     public static function getRevPage($page_id, $rev)
     {
-        $page = PagesHistory::where('pages_page_id', $page_id)
+        $page = Archive::where('pages_page_id', $page_id)
             ->where('rev', $rev)
             ->first();
 
@@ -36,7 +37,7 @@ class Page
 
     public static function getPageHistories($page_id)
     {
-        $histories = PagesHistory::where('pages_page_id', $page_id)
+        $histories = Archive::where('pages_page_id', $page_id)
             ->with('writer')
             ->orderBy('created_at', 'desc')
             ->take(50)
@@ -52,6 +53,52 @@ class Page
         $title = preg_replace('![^' . preg_quote($separator) . '\pL\pN\s]+!u', '', mb_strtolower($title));
         $title = preg_replace('![' . preg_quote($separator) . '\s]+!u', $separator, $title);
         return trim($title, $separator);
+    }
+
+    public static function getDiffHtml($l_content, $r_content)
+    {
+        include "finediff.php";
+        $l_text = mb_convert_encoding($l_content, 'HTML-ENTITIES', 'UTF-8');
+        $r_text = mb_convert_encoding($r_content, 'HTML-ENTITIES', 'UTF-8');
+        $opcodes = FineDiff::getDiffOpcodes($l_text, $r_text, [
+            FineDiff::paragraphDelimiters,
+            FineDiff::sentenceDelimiters,
+            FineDiff::wordDelimiters,
+            ';',
+        ]);
+        $rendered_diff = FineDiff::renderDiffToHTMLFromOpcodes($l_text, $opcodes);
+        $rendered_diff = mb_convert_encoding($rendered_diff, 'UTF-8', 'HTML-ENTITIES');
+        $rendered_diff = str_replace('\r\n', '\n', $rendered_diff);
+        $rendered_diff = str_replace('\r', '\n', $rendered_diff);
+        $rendered_diff = str_replace('\n', '&nbsp;<br/>', $rendered_diff);
+
+        return $rendered_diff;
+    }
+
+    public static function archive($title, $content, $writer_id)
+    {
+        $slug = PageRepository::slug($title);
+
+        $page = PageRepository::getPage($title);
+        $page->rev = $page->rev + 1;
+        $page->title = $title;
+        $page->slug = $slug;
+        $page->content = $content;
+        $page->writer_id = $writer_id;
+        $page->save();
+
+        $history = new Archive();
+        $history->pages_page_id = $page->id;
+        $history->rev = $page->rev;
+        $history->title = $page->title;
+        $history->slug = $page->slug;
+        $history->content = $page->content;
+        $history->writer_id = $page->writer_id;
+        $history->created_at = $page->updated_at;
+        $history->updated_at = $page->updated_at;
+        $history->save();
+
+        return $page;
     }
 
     public static function setMetaTags($page)

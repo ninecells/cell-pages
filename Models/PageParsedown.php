@@ -1,6 +1,6 @@
 <?php
 
-namespace NineCells\Pages\Models;
+namespace NineCells\Page\Models;
 
 class PageParsedown extends \Parsedown
 {
