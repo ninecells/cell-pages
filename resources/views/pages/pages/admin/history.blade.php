@@ -23,7 +23,7 @@
         <td><input name="left" type="radio" value="{{ $history->rev }}"/></td>
         <td><input name="right" type="radio" value="{{ $history->rev }}"/></td>
         <td>{{ $history->rev }}</td>
-        <td><a href="/pages/{{ $history->slug }}/{{ $history->rev }}">{{ $history->title }}</a></td>
+        <td><a href="/admin/pages/{{ $history->slug }}/{{ $history->rev }}">{{ $history->title }}</a></td>
         <td>{{ $history->created_at->diffForHumans() }}</td>
         <td><a href="/members/{{ $history->writer_id }}">{{ $history->writer->name }}</a></td>
     </tr>

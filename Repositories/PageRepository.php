@@ -58,6 +58,8 @@ class PageRepository
     public static function getDiffHtml($l_content, $r_content)
     {
         include "finediff.php";
+        $l_content = htmlentities($l_content);
+        $r_content = htmlentities($r_content);
         $l_text = mb_convert_encoding($l_content, 'HTML-ENTITIES', 'UTF-8');
         $r_text = mb_convert_encoding($r_content, 'HTML-ENTITIES', 'UTF-8');
         $opcodes = FineDiff::getDiffOpcodes($l_text, $r_text, [
