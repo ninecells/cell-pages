@@ -111,6 +111,6 @@ class AdminController extends Controller
 
         $page = PageRepository::archive($title, $content, Auth::user()->id);
 
-        return redirect("/admin/pages");
+        return redirect("/admin/pages/{{ $page->slug }}/edit");
     }
 }

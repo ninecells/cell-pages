@@ -18,7 +18,8 @@ $hs = History::orderBy('id', 'desc')->paginate(10);
     <tbody>
     @foreach ( $hs as $h )
     <tr>
-        <td><a href="/admin/pages/{{ $h->slug }}/{{ $h->rev }}">{{ $h->title }}</a></td>
+        <td><a href="/admin/pages/{{ $h->slug }}/edit">{{ $h->title }}</a></td>
+        <td><a href="/pages/{{ $h->slug }}">페이지 이동</a></td>
         <td>{{ $h->created_at->diffForHumans() }}</td>
         <td><a href="/members/{{ $h->writer_id }}">{{ $h->writer->name }}</a></td>
     </tr>

@@ -14,6 +14,7 @@
         <textarea class="form-control" id="content" name="content" placeholder="내용"
                   rows="20">{{ $page->content }}</textarea>
     </div>
-    <button type="submit" class="btn btn-default">저장</button>
+    <button type="submit" class="btn btn-primary">저장</button>
+    <a href="/pages/{{ $page->slug }}" class="btn btn-default">미리보기</a>
 </form>
 @endsection
