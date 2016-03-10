@@ -35,7 +35,7 @@ class PageServiceProvider extends ServiceProvider
         ], 'migrations');
 
         $packages->addPackageInfo('pages', 'Pages', function() {
-            return 'PagesServiceProvider.php를 수정하세요';
+            return '/admin/pages';
         });
     }
 
