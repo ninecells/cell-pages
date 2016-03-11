@@ -110,7 +110,7 @@ class PageRepository
         config(['og:title' => $page->title]);
 
         // 문서가 만들어진 경우에만 입력할 수 있는 meta 생성
-        if ($page->slug) {
+        if ($page->exists()) {
             $desc = strip_tags($page->md_content);
             $desc = str_replace("\r\n", "\n", $desc);
             $desc = str_replace("\r", " ", $desc);
