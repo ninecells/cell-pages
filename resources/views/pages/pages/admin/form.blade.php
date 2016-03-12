@@ -10,7 +10,9 @@
     {{ method_field('PUT') }}
     <div class="form-group">
         <label for="title">제목</label>
-        <input type="text" class="form-control" id="title" name="title" placeholder="제목" value="{{ $page->title }}">
+        <input type="text" class="form-control"
+               id="title" name="title" placeholder="제목" value="{{ $page->title }}"
+               {{ $page->exists() ? 'readonly ' : '' }}/>
     </div>
     <div class="form-group">
         <label for="content">내용</label>
