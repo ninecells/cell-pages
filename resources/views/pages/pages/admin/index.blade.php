@@ -24,6 +24,7 @@ $hs = History::orderBy('id', 'desc')->paginate(10);
         <td>
             <a href="/pages/{{ $h->slug }}">{{ $h->title }}</a>
             (<a href="/admin/pages/{{ $h->slug }}/edit">편집</a>)
+            (<a href="/admin/pages/{{ $h->slug }}/history">역사</a>)
         </td>
         <td>{{ $h->created_at->diffForHumans() }}</td>
         <td><a href="/members/{{ $h->writer_id }}">{{ $h->writer->name }}</a></td>
