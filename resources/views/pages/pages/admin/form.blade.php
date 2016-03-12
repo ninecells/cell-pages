@@ -1,6 +1,6 @@
 @extends('ncells::admin.app')
 
-@section('page-title', '"'.$page->title.'" 페이지 편집')
+@section('page-title', '"<a href="/pages/'.$page->slug.'">'.$page->title.'</a>" 페이지 편집')
 @section('page-description', '페이지를 편집합니다')
 
 @section('content')
@@ -20,6 +20,5 @@
                   rows="20">{{ $page->content }}</textarea>
     </div>
     <button type="submit" class="btn btn-primary">저장</button>
-    <a href="/pages/{{ $page->slug }}" class="btn btn-default">미리보기</a>
 </form>
 @endsection

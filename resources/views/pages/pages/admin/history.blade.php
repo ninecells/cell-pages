@@ -1,6 +1,6 @@
 @extends('ncells::admin.app')
 
-@section('page-title', '"'.$page->title.'" 페이지 역사')
+@section('page-title', '"<a href="/pages/'.$page->slug.'">'.$page->title.'</a>" 페이지 역사')
 @section('page-description', '페이지가 수정된 이력입니다')
 
 @section('content')

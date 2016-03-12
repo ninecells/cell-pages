@@ -1,6 +1,6 @@
 @extends('ncells::admin.app')
 
-@section('page-title', '"'.$page->title.'" 페이지 비교')
+@section('page-title', '"<a href="/pages/'.$page->slug.'">'.$page->title.'</a>" 페이지 비교')
 @section('page-description', '두 페이지의 차이를 비교합니다')
 
 @section('content')
