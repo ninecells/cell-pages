@@ -1,5 +1,6 @@
 @extends('ncells::admin.app')
 
+@section('title', '페이지 편집')
 @section('page-title', '"<a href="/pages/'.$page->slug.'">'.$page->title.'</a>" 페이지 편집')
 @section('page-description', '페이지를 편집합니다')
 

@@ -6,6 +6,7 @@ $hs = History::orderBy('id', 'desc')->paginate(10);
 
 @extends('ncells::admin.app')
 
+@section('title', '최근 변경 페이지')
 @section('page-title', '최근 변경 페이지')
 @section('page-description', '최근 변경 순으로 정렬된 페이지 목록입니다')
 

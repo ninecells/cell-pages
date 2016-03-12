@@ -1,5 +1,6 @@
 @extends('ncells::admin.app')
 
+@section('title', $page->title.' #'.$rev)
 @section('page-title', $page->title.' #'.$rev)
 
 @section('content')
