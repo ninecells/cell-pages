@@ -5,9 +5,19 @@
 @section('page-description', '두 페이지의 차이를 비교합니다')
 
 @section('content')
-@include('ncells::pages.parts.admin.top_tab', ['type' => 'history'])
-<div class="panecontainer">
-    <div id="htmldiff" class="pane" style="white-space:pre-wrap"><?php echo $rendered_diff; ?></div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                @include('ncells::pages.parts.admin.top_tab', ['type' => null])
+            </div>
+            <div class="box-body">
+                <div class="panecontainer">
+                    <div id="htmldiff" class="pane" style="white-space:pre-wrap"><?php echo $rendered_diff; ?></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 

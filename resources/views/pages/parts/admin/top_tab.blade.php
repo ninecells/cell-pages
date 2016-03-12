@@ -1,4 +1,3 @@
-<p>
 <ul class="nav nav-tabs" role="tablist">
     @can('page-write')
     <li role="presentation"{!! $type === 'edit' ? ' class="active"' : '' !!}>
@@ -12,4 +11,3 @@
     </li>
     @endif
 </ul>
-</p>
