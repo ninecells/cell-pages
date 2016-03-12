@@ -4,10 +4,25 @@ namespace NineCells\Pages\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
+use NineCells\Admin\PackageList;
 use NineCells\Pages\Repositories\PageRepository;
 
 class AdminController extends Controller
 {
+    public function __construct(PackageList $packageInfo)
+    {
+        $packageInfo->setCurrentMenu('pages', [
+            [
+                'title' => '최근 편집 페이지',
+                'url' => 'admin/pages'
+            ],
+            [
+                'title' => '페이지 생성',
+                'url' => 'admin/pages/create'
+            ],
+        ]);
+    }
+
     public function GET_admin_index()
     {
         return view('ncells::pages.pages.admin.index');
@@ -51,7 +66,19 @@ class AdminController extends Controller
 
         PageRepository::setMetaTags($page);
 
-        return view('ncells::pages.pages.admin.form', ['page' => $page]);
+        return view('ncells::pages.pages.admin.edit_form', ['page' => $page]);
+    }
+
+    public function PUT_edit_page_form(Request $request)
+    {
+        $this->authorize('page-write');
+
+        $title = $request->input('title');
+        $content = $request->input('content');
+
+        $page = PageRepository::archive($title, $content, Auth::user()->id);
+
+        return redirect("/admin/pages/{{ $page->slug }}/edit");
     }
 
     public function GET_page_history($key)
@@ -102,15 +129,10 @@ class AdminController extends Controller
         return view('ncells::pages.pages.admin.compare', ['page' => $page, 'rendered_diff' => $diff]);
     }
 
-    public function PUT_edit_page_form(Request $request)
+    public function GET_create_page_form()
     {
         $this->authorize('page-write');
 
-        $title = $request->input('title');
-        $content = $request->input('content');
-
-        $page = PageRepository::archive($title, $content, Auth::user()->id);
-
-        return redirect("/admin/pages/{{ $page->slug }}/edit");
+        return view('ncells::pages.pages.admin.create_form');
     }
 }
