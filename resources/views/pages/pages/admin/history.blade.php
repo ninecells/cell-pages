@@ -1,8 +1,10 @@
 @extends('ncells::admin.app')
 
+@section('page-title', '"'.$page->title.'" 페이지 역사')
+@section('page-description', '페이지가 수정된 이력입니다')
+
 @section('content')
 @include('ncells::pages.parts.admin.top_tab', ['type' => 'history'])
-<h1>역사: {{ $page->title }}</h1>
 <p>
     <a id="btn-compare" href="#" class="btn btn-success" data-page-slug="{{ $page->slug }}">비교하기</a>
 </p>

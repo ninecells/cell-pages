@@ -1,8 +1,10 @@
 @extends('ncells::admin.app')
 
+@section('page-title', '"'.$page->title.'" 페이지 비교')
+@section('page-description', '두 페이지의 차이를 비교합니다')
+
 @section('content')
 @include('ncells::pages.parts.admin.top_tab', ['type' => 'history'])
-<h1>비교: {{ $page->title }}</h1>
 <div class="panecontainer">
     <div id="htmldiff" class="pane" style="white-space:pre-wrap"><?php echo $rendered_diff; ?></div>
 </div>

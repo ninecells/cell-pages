@@ -1,5 +1,8 @@
 @extends('ncells::admin.app')
 
+@section('page-title', '"'.$page->title.'" 페이지 편집')
+@section('page-description', '페이지를 편집합니다')
+
 @section('content')
 @include('ncells::pages.parts.admin.top_tab', ['type' => 'edit'])
 <form method="post" action="/admin/pages/update">
