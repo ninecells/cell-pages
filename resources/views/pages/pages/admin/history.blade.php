@@ -29,9 +29,9 @@
         <th class="rev">#</th>
         <th class="left">L</th>
         <th class="right">R</th>
-        <th class="title">제목</th>
-        <th class="created">변경</th>
         <th class="writer">변경한 사람</th>
+        <th class="created">변경</th>
+        <th class="title">제목</th>
     </tr>
     </thead>
     <tbody>
@@ -40,13 +40,13 @@
         <td class="rev">{{ $history->rev }}</td>
         <td class="left"><input name="left" type="radio" value="{{ $history->rev }}"/></td>
         <td class="right"><input name="right" type="radio" value="{{ $history->rev }}"/></td>
+        <td class="writer"><a href="/members/{{ $history->writer_id }}">{{ $history->writer->name }}</a></td>
+        <td class="created">{{ $history->created_at->diffForHumans() }}</td>
         <td class="title">
             <a href="/admin/pages/{{ $history->slug }}/{{ $history->rev }}">
                 {{ $history->title }} #{{ $history->rev }}
             </a>
         </td>
-        <td class="created">{{ $history->created_at->diffForHumans() }}</td>
-        <td class="writer"><a href="/members/{{ $history->writer_id }}">{{ $history->writer->name }}</a></td>
     </tr>
     @endforeach
     </tbody>
