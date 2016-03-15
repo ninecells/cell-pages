@@ -11,6 +11,8 @@ class AdminController extends Controller
 {
     public function __construct(PackageList $packageInfo)
     {
+        $this->authorize('page-admin');
+
         $packageInfo->setCurrentMenu('pages', [
             [
                 'title' => '최근 편집 페이지',
