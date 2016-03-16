@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use NineCells\Admin\AdminManager;
 use NineCells\Admin\AdminServiceProvider;
 use NineCells\Admin\PackageList;
-use NineCells\Auth\AuthServiceProvider;
+use NineCells\Auth\MemberServiceProvider;
 
 class PageServiceProvider extends ServiceProvider
 {
@@ -46,7 +46,7 @@ class PageServiceProvider extends ServiceProvider
 
     public function register()
     {
-        App::register(AuthServiceProvider::class);
+        App::register(MemberServiceProvider::class);
         App::register(AdminServiceProvider::class);
     }
 }
