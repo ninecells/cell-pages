@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use NineCells\Admin\AdminManager;
 use NineCells\Admin\AdminServiceProvider;
 use NineCells\Admin\PackageList;
-use NineCells\Auth\MemberServiceProvider;
+use NineCells\Member\MemberServiceProvider;
 
 class PageServiceProvider extends ServiceProvider
 {
